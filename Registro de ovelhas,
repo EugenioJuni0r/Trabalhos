@@ -2,12 +2,12 @@
 de registros e as funcionalidades do menu abaixo:
  MENU PRINCIPAL
 ----------------------------------------------
-1 – INCLUIR UM REGISTRO
-2 – BUSCAR UM REGISTRO
-3 – ALTERAR UM REGISTRO
-4 – EXCLUIR UM REGISTRO
-5 – LISTAR REGISTROS EXISTENTES
-6 – SAIR DO SISTEMA
+1 – INCLUIR UM REGISTRO feito
+2 – BUSCAR UM REGISTRO em progresso
+3 – ALTERAR UM REGISTRO feito (vou testar ainda)
+4 – EXCLUIR UM REGISTRO feito
+5 – LISTAR REGISTROS EXISTENTES feito
+6 – SAIR DO SISTEMA feito
 Considere que:
 - O registro escolhido deverá ter, obrigatoriamente, um campo chave primária do tipo inteiro
 (pesquisar o que significa “campo chave primária”);
@@ -39,9 +39,9 @@ int main(){
         int idade, ID; // Id == numero de identificação
         bool gestacao; // Ovelhas em processo de gestação produzem menos lã
     };
-    tOvelhas ovelhas[100]; // levando em consideração que o seleiro da fazenda tem 200m² e em cada m² cabem em media 0,5 ovelhas, decidimos deixar 100 casas no vetor.  
+    tOvelhas ovelhas[100]; // partindo do pre-suposto que o seleiro da fazenda tem 200m² e em cada m² cabem em media 0,5 ovelhas, decidimos deixar 100 casas no vetor.  
     bool sair, flag; // sair é usado para sair do sistema e flag para chegar os dados que são inseridos nos campos do registro 
-    int op, ult = 0, i, busca, IDB, j, opA, opP; // op == opção selecionada e ult sera usado para contar o vetor dos registros, opA opção para a alteração de registros, opP para alterar algum ano da produção e opS para alterar o sexo da ovelha.
+    int op, ult = 0, i, busca, IDB, j, opA, opP, pe; // op == opção selecionada e ult sera usado para contar o vetor dos registros, opA opção para a alteração de registros, opP para alterar algum ano da produção e opS para alterar o sexo da ovelha.
     char opS;
     do{
         sair = true;
@@ -67,7 +67,6 @@ int main(){
                         }
                 }while(flag);
                 do{
-                    getchar();
                     flag = true;
                     cout << "\tInsira a raça da ovelha: ";
                     getchar();
@@ -204,7 +203,7 @@ int main(){
                                 i = 101;
                             break;
                             case 4:
-                                cout << "\tDigite o sexo da sua ovelha(M - Macho, F - Femea)\nDigite qualquer outro caractere para sair\n";
+                                cout << "\tDigite o sexo da sua ovelha(M - Macho, F - Femea)\t\nDigite qualquer outro caractere para sair: ";
                                 cin >> opS;
                                 switch(opS){
                                     case 'F':
@@ -231,12 +230,17 @@ int main(){
                                 i = 101;
                             break;
                             case 6:
-                                do{
-                                    cout << "\tDigite se a sua ovelha esta em gestação(0 - Não, 1 - Sim): ";
-                                    cin >> ovelhas[i].gestacao;
-                                }while(ovelhas[i].gestacao != 1 || ovelhas[i].gestacao != 0);
-                                cout << "\tAlteração feita com sucesso.";
-                                i = 101;
+                                if(ovelhas[i].sexo == 'm' || ovelhas[i].sexo == 'M'){ // se a ovelha for macho obrigatoriamente ela não pode estar em gestação
+                                    cout << "\toperação invalida";
+                                }
+                                else{
+                                    do{
+                                        cout << "\tDigite se a sua ovelha esta em gestação(0 - Não, 1 - Sim): ";
+                                        cin >> ovelhas[i].gestacao;
+                                    }while(ovelhas[i].gestacao != 1 && ovelhas[i].gestacao != 0);
+                                    cout << "\tAlteração feita com sucesso.";
+                                    i = 101;
+                                }
                             break;
                             default:
                                 cout << "Opção invalida."; /*se quiser repetir coloca um do_while, to colocando só uma vez para desistencia*/
@@ -248,12 +252,38 @@ int main(){
                     }
                 }
             break;
-            case 4:
-                cout << "Gostaria de excluir qual ID?"; /*Mostrar a tela de ID*/
-                cin;
+            case 4: //excluir um registro
+                cout << "Gostaria de excluir qual ID?"; /*Mostrar a tela de ID?*/
+                cin >> opA;
+                for(i = 0; i < 100; i++){
+                    if(opA == ovelhas[i].ID){
+                        pe = i;
+                        flag = true;
+                        i = 100;
+                    }
+                    if(!flag && i == 99){
+                        cout << "\tID não encontrado\n";
+                    }
+                }
+                if(flag){
+                    for(i = pe; i < 99-pe; i++){
+                        ovelhas[i].ID = ovelhas[i+1].ID;
+                        ovelhas[i].raca = ovelhas[i+1].raca;
+                        ovelhas[i].peso = ovelhas[i+1].peso;
+                        ovelhas[i].idade = ovelhas[i+1].idade;
+                        ovelhas[i].sexo = ovelhas[i+1].sexo;
+                        ovelhas[i].gestacao = ovelhas[i+1].gestacao;
+                        ovelhas[i].producaoA[1] = ovelhas[i+1].producaoA[1];
+                        ovelhas[i].producaoA[2] = ovelhas[i+1].producaoA[2];
+                        ovelhas[i].producaoA[3] = ovelhas[i+1].producaoA[3];
+                        ovelhas[i].producaoA[4] = ovelhas[i+1].producaoA[4];
+                        ovelhas[i].producaoA[5] = ovelhas[i+1].producaoA[5];
+                    }
+                    ult--;
+                }
             break;
             case 5:
-                cout << "\t-------------------------------------------\n\tNI\tRaça\tProdução de 2019-2023\t\t\t\tPeso\tSexo\tIdade\tGestação\n"; /*Will deixe de ser corno, se por ID bote ID não NI cabeça de cebola, faz só para complicar*/
+                cout << "\t-------------------------------------------\n\tNI\tRaça\tProdução de 2019-2023\t\t\t\tPeso\tSexo\tIdade\tGestação\n"; /*Will deixe de ser corno, se por ID bote ID não NI cabeça de cebola, faz só para complicar*/ /*é pra ter coerencia mano*/
                 for(i = 0; i < ult; i++){
                     cout << "\t" << ovelhas[i].ID << "\t" << ovelhas[i].raca << "\t" ;
                     for(int j = 0; j < 5; j++){
