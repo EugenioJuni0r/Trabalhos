@@ -40,11 +40,11 @@ int main(){
         bool gestacao; // Ovelhas em processo de gestação produzem menos lã
     };
     tOvelhas ovelhas[100]; // partindo do pre-suposto que o seleiro da fazenda tem 200m² e em cada m² cabem em media 0,5 ovelhas, decidimos deixar 100 casas no vetor.  
-    bool sair, flag, gestacao; // sair é usado para sair do sistema e flag para chegar os dados que são inseridos nos campos do registro 
-    int op, ult = 0, i, busca, IDB, j, opA, opP, pe, opB, idadeB, producaoAB; // op == opção selecionada e ult sera usado para contar o vetor dos registros, opA opção para a alteração de registros, opP para alterar algum ano da produção e opS para alterar o sexo da ovelha.
-    char opS, sexoB;
-    float pesoB;
-    string racaB;
+    bool sair, flag, boolB; // sair é usado para sair do sistema e flag para chegar os dados que são inseridos nos campos do registro 
+    int op, ult = 0, i, busca, IDB, j, opA, opP, pe, opB, intB, opBA; // op == opção selecionada e ult sera usado para contar o vetor dos registros, opA opção para a alteração de registros, opP para alterar algum ano da produção e opS para alterar o sexo da ovelha.
+    char opS, charB;
+    float floatB, PB; /*PB == Peso de Busca*/
+    string stringB;
     do{
         sair = true;
         cout << "\n\t\t\tFazenda São Tomé\n\t\t\tMENU PRINCIPAL\n\t-------------------------------------------\n\t\t1 – Registrar uma Ovelha\n\t\t2 – Buscar um Registro\n\t\t3 – Alterar um Registro\n\t\t4 – Excluir um Registro\n\t\t5 – Listar Registros\n\t\t6 – Sair do Sistema\n\t-------------------------------------------\n\t\t";
@@ -134,22 +134,151 @@ int main(){
                 cin >> opB; /*opB = opção de busca*/
                 switch(opB){
                 case 7:
+                    do{
+                        cout << "\tDigite se a sua ovelha esta em gestção (0 - Não, 1 - Sim): ";
+                        cin >> boolB;
+                    }while(boolB != 1 && boolB != 0);
+                    for(i = 0; i < 100; i++){
+                        if(boolB == ovelhas[i].gestacao){
+                            cout << "\tOvelha encontrada!\n";
+                            cout <<"\tNI\tRaça\tProdução de 2019-2023\t\t\t\tPeso\tSexo\tIdade\tGestação\n";
+                            cout << "\t" << ovelhas[i].ID << "\t" << ovelhas[i].raca << "\t";
+                            for(j = 0; j < 5/*sujeito a alteração*/; j++){ /*Se a ovelha não tiver 5 anos e só tiver 4? A gente teria que mostrar 4, não sei se tu pensou nisso, mas tb n vou procurar, mas para resolver cria uma variavel que SE a ovelha tiver menos de 5 anos ela guarde a sua idade e bota isso durante a procura da ovelha antes de entrar nesse if, ou já no if tb, tanto faz.*/
+                                if(ovelhas[i].idade > 0)
+                                    cout << ovelhas[i].producaoA[j] << "\t";
+                                else
+                                cout << "N/A";
+                            }
+                            cout << "\t" << ovelhas[i].peso << "\t";
+                            if(ovelhas[i].sexo == 'M' || ovelhas[i].sexo == 'm')
+                                cout << "Macho\t"; 
+                            else
+                                cout << "Femea\t"; 
+                            cout << ovelhas[i].idade << "\t";
+                            if(ovelhas[i].gestacao == 1)
+                                cout << "Sim";   
+                            else 
+                                cout << "Não";
+                            i = 101;
+                        } else { 
+                            if(i == 99) {
+                                cout << "\tOvelha não encontrada.";
+                            }
+                        }
+                    }
                 break;
                 case 2:
                     cout << "Digite a raca que voce gostaria de buscar";
-                    ge 
+                    getline(cin, stringB);
+                    for(i = 0; i < 100; i++){
+                        if(stringB == ovelhas[i].raca){
+                            cout << "\tOvelha encontrada!\n";
+                            cout <<"\tNI\tRaça\tProdução de 2019-2023\t\t\t\tPeso\tSexo\tIdade\tGestação\n";
+                            cout << "\t" << ovelhas[i].ID << "\t" << ovelhas[i].raca << "\t";
+                            for(j = 0; j < 5/*sujeito a alteração*/; j++){ /*Se a ovelha não tiver 5 anos e só tiver 4? A gente teria que mostrar 4, não sei se tu pensou nisso, mas tb n vou procurar, mas para resolver cria uma variavel que SE a ovelha tiver menos de 5 anos ela guarde a sua idade e bota isso durante a procura da ovelha antes de entrar nesse if, ou já no if tb, tanto faz.*/
+                                if(ovelhas[i].idade > 0)
+                                    cout << ovelhas[i].producaoA[j] << "\t";
+                                else
+                                cout << "N/A";
+                            }
+                            cout << "\t" << ovelhas[i].peso << "\t";
+                            if(ovelhas[i].sexo == 'M' || ovelhas[i].sexo == 'm')
+                                cout << "Macho\t"; 
+                            else
+                                cout << "Femea\t"; 
+                            cout << ovelhas[i].idade << "\t";
+                            if(ovelhas[i].gestacao == 1)
+                                cout << "Sim";   
+                            else 
+                                cout << "Não";
+                            i = 101;
+                        } else { 
+                            if(i == 99) {
+                                cout << "\tOvelha não encontrada.";
+                            }
+                        }
+                    }
                 break;
                 case 3:
+                    cout << "\tDigite em que ano da produção que voce gostaria de buscar(0 - 2019, 1 - 2020, 2 - 2021, 3 - 2022, 4 - 2023), caso queira sair digite um numero não listado: ";
+                    cin >> opBA; 
+                    switch(opBA){
+                        case 1:
+                        case 2:
+                        case 3:
+                        case 4:
+                        case 0:
+                            cout << "\tDigite a quantidade de lã (em kg) produzida nesse que voce gostaria de buscar: ";
+                            cin >> PB;
+                        default: 
+                            cout << "\tOpção invalida.";
+                    }
+                    for(i = 0; i < 100; i++){
+                        if(PB == ovelhas[i].producaoA[opBA]){
+                            cout << "\tOvelha encontrada!\n";
+                            cout <<"\tNI\tRaça\tProdução de 2019-2023\t\t\t\tPeso\tSexo\tIdade\tGestação\n";
+                            cout << "\t" << ovelhas[i].ID << "\t" << ovelhas[i].raca << "\t";
+                            for(j = 0; j < 5/*sujeito a alteração*/; j++){ /*Se a ovelha não tiver 5 anos e só tiver 4? A gente teria que mostrar 4, não sei se tu pensou nisso, mas tb n vou procurar, mas para resolver cria uma variavel que SE a ovelha tiver menos de 5 anos ela guarde a sua idade e bota isso durante a procura da ovelha antes de entrar nesse if, ou já no if tb, tanto faz.*/
+                                if(ovelhas[i].idade > 0)
+                                    cout << ovelhas[i].producaoA[j] << "\t";
+                                else
+                                cout << "N/A";
+                            }
+                            cout << "\t" << ovelhas[i].peso << "\t";
+                            if(ovelhas[i].sexo == 'M' || ovelhas[i].sexo == 'm')
+                                cout << "Macho\t"; 
+                            else
+                                cout << "Femea\t"; 
+                            cout << ovelhas[i].idade << "\t";
+                            if(ovelhas[i].gestacao == 1)
+                                cout << "Sim";   
+                            else 
+                                cout << "Não";
+                            i = 101;
+                        } else { 
+                            if(i == 99) {
+                                cout << "\tOvelha não encontrada.";
+                            }
+                        }
+                    }
                 break;
                 case 4:
+                    cout << "\tDigite o peso da(s) ovelha(s) que voce gostaria de buscar: ";
+                    cin >> floatB;
+                    for(i = 0; i < 100; i++){
+                        if(floatB == ovelhas[i].peso){
+                            cout << "\tOvelha encontrada!\n";
+                            cout <<"\tNI\tRaça\tProdução de 2019-2023\t\t\t\tPeso\tSexo\tIdade\tGestação\n";
+                            cout << "\t" << ovelhas[i].ID << "\t" << ovelhas[i].raca << "\t";
+                            for(j = 0; j < 5/*sujeito a alteração*/; j++){ /*Se a ovelha não tiver 5 anos e só tiver 4? A gente teria que mostrar 4, não sei se tu pensou nisso, mas tb n vou procurar, mas para resolver cria uma variavel que SE a ovelha tiver menos de 5 anos ela guarde a sua idade e bota isso durante a procura da ovelha antes de entrar nesse if, ou já no if tb, tanto faz.*/
+                                if(ovelhas[i].idade > 0)
+                                    cout << ovelhas[i].producaoA[j] << "\t";
+                                else
+                                cout << "N/A";
+                            }
+                            cout << "\t" << ovelhas[i].peso << "\t";
+                            if(ovelhas[i].sexo == 'M' || ovelhas[i].sexo == 'm')
+                                cout << "Macho\t"; 
+                            else
+                                cout << "Femea\t"; 
+                            cout << ovelhas[i].idade << "\t";
+                            if(ovelhas[i].gestacao == 1)
+                                cout << "Sim";   
+                            else 
+                                cout << "Não";
+                            i = 101;
+                        } else { 
+                            if(i == 99) {
+                                cout << "\tOvelha não encontrada.";
+                            }
+                        }
+                    }
                 break; 
                 case 5:
-                break; 
-                case 6:
-                break;
-                case 1:
-                    cout << "\tDigite o ID do registro voce gostaria de ver: "; 
-                    cin >> IDB; /*IDB = ID de busca*/
+                    do{
+                        cout << "\tDigite qual o sexo da(s) ovelha(s) que voce gostaria de buscar (M - Macho, F - Femea): ";
+                        cin >> charB;
+                    }while((charB != 'M' || charB != 'm')||(charB != 'F' || charB != 'f'));
                     for(i = 0; i < 100; i++){
                         if(IDB == ovelhas[i].ID){
                             cout << "\tOvelha encontrada!\n";
@@ -163,7 +292,71 @@ int main(){
                             }
                             cout << "\t" << ovelhas[i].peso << "\t";
                             if(ovelhas[i].sexo == 'M' || ovelhas[i].sexo == 'm')
-                                cout << "Macho\t"; /*não conferi o código ainda, mas lembrar de limitar o código a "H,h" e "M,m"*/
+                                cout << "Macho\t"; 
+                            else
+                                cout << "Femea\t"; 
+                            cout << ovelhas[i].idade << "\t";
+                            if(ovelhas[i].gestacao == 1)
+                                cout << "Sim";   
+                            else 
+                                cout << "Não";
+                            i = 101;
+                        } else { 
+                            if(i == 99) {
+                                cout << "\tOvelha não encontrada.";
+                            }
+                        }
+                    }
+                break; 
+                case 6:
+                    cout << "\tDigite pela idade da(s) ovelha(s) que voce gostaria de buscar: ";
+                    cin >> intB;
+                    for(i = 0; i < 100; i++){
+                        if(intB == ovelhas[i].idade){
+                            cout << "\tOvelha encontrada!\n";
+                            cout <<"\tNI\tRaça\tProdução de 2019-2023\t\t\t\tPeso\tSexo\tIdade\tGestação\n";
+                            cout << "\t" << ovelhas[i].ID << "\t" << ovelhas[i].raca << "\t";
+                            for(j = 0; j < 5/*sujeito a alteração*/; j++){ /*Se a ovelha não tiver 5 anos e só tiver 4? A gente teria que mostrar 4, não sei se tu pensou nisso, mas tb n vou procurar, mas para resolver cria uma variavel que SE a ovelha tiver menos de 5 anos ela guarde a sua idade e bota isso durante a procura da ovelha antes de entrar nesse if, ou já no if tb, tanto faz.*/
+                                if(ovelhas[i].idade > 0)
+                                    cout << ovelhas[i].producaoA[j] << "\t";
+                                else
+                                cout << "N/A";
+                            }
+                            cout << "\t" << ovelhas[i].peso << "\t";
+                            if(ovelhas[i].sexo == 'M' || ovelhas[i].sexo == 'm')
+                                cout << "Macho\t"; 
+                            else
+                                cout << "Femea\t"; 
+                            cout << ovelhas[i].idade << "\t";
+                            if(ovelhas[i].gestacao == 1)
+                                cout << "Sim";   
+                            else 
+                                cout << "Não";
+                            i = 101;
+                        } else { 
+                            if(i == 99) {
+                                cout << "\tOvelha não encontrada.";
+                            }
+                        }
+                    }
+                break;
+                case 1:
+                    cout << "\tDigite o ID do registro voce gostaria de ver: "; 
+                    cin >> intB;
+                    for(i = 0; i < 100; i++){
+                        if(intB == ovelhas[i].ID){
+                            cout << "\tOvelha encontrada!\n";
+                            cout <<"\tNI\tRaça\tProdução de 2019-2023\t\t\t\tPeso\tSexo\tIdade\tGestação\n";
+                            cout << "\t" << ovelhas[i].ID << "\t" << ovelhas[i].raca << "\t";
+                            for(j = 0; j < 5/*sujeito a alteração*/; j++){ /*Se a ovelha não tiver 5 anos e só tiver 4? A gente teria que mostrar 4, não sei se tu pensou nisso, mas tb n vou procurar, mas para resolver cria uma variavel que SE a ovelha tiver menos de 5 anos ela guarde a sua idade e bota isso durante a procura da ovelha antes de entrar nesse if, ou já no if tb, tanto faz.*/
+                                if(ovelhas[i].idade > 0)
+                                    cout << ovelhas[i].producaoA[j] << "\t";
+                                else
+                                cout << "N/A";
+                            }
+                            cout << "\t" << ovelhas[i].peso << "\t";
+                            if(ovelhas[i].sexo == 'M' || ovelhas[i].sexo == 'm')
+                                cout << "Macho\t"; 
                             else
                                 cout << "Femea\t"; 
                             cout << ovelhas[i].idade << "\t";
