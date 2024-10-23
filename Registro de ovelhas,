@@ -4,7 +4,7 @@ de registros e as funcionalidades do menu abaixo:
 ----------------------------------------------
 1 – INCLUIR UM REGISTRO feito
 2 – BUSCAR UM REGISTRO em progresso
-3 – ALTERAR UM REGISTRO feito (vou testar ainda)
+3 – ALTERAR UM REGISTRO feito 
 4 – EXCLUIR UM REGISTRO feito
 5 – LISTAR REGISTROS EXISTENTES feito
 6 – SAIR DO SISTEMA feito
@@ -54,6 +54,7 @@ int main(){
                 getchar();
                 do{
                     flag = true;
+                    
                     cout << "\tInsira o Numero de identificação da ovelha: ";
                     cin >> ovelhas[ult].ID;
                     if(ovelhas[ult].ID < 0){
@@ -64,7 +65,7 @@ int main(){
                             if(ovelhas[i].ID == ovelhas[ult].ID){
                                 cout << "\tEsse numero de identificação já esta sendo usado, escolha outro\n";
                                 i = ult;
-                                flag == true;
+                                flag = true;
                             }
                         }
                 }while(flag);
@@ -86,6 +87,11 @@ int main(){
                         cout << "\tSexo invalido, tente novamete\n";
                     else 
                         flag = false;
+                        if(ovelhas[ult].sexo == 'F' || ovelhas[ult].sexo == 'f'){
+                            ovelhas[ult].sexo = 'F';
+                        }else{
+                            ovelhas[ult].sexo = 'M';
+                        }
                 }while(flag);
                 do{
                     flag = true;
@@ -278,9 +284,14 @@ int main(){
                     do{
                         cout << "\tDigite qual o sexo da(s) ovelha(s) que voce gostaria de buscar (M - Macho, F - Femea): ";
                         cin >> charB;
-                    }while((charB != 'M' || charB != 'm')||(charB != 'F' || charB != 'f'));
+                    }while((charB != 'M' && charB != 'm')&&(charB != 'F' && charB != 'f'));
+                    if(charB == 'm' || charB  == 'M'){
+                        charB = 'M';
+                    }else{
+                        charB = 'F';
+                    }
                     for(i = 0; i < 100; i++){
-                        if(IDB == ovelhas[i].ID){
+                        if(charB == ovelhas[i].sexo){
                             cout << "\tOvelha encontrada!\n";
                             cout <<"\tNI\tRaça\tProdução de 2019-2023\t\t\t\tPeso\tSexo\tIdade\tGestação\n";
                             cout << "\t" << ovelhas[i].ID << "\t" << ovelhas[i].raca << "\t";
