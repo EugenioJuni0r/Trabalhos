@@ -125,7 +125,7 @@ int main(){
                 for(i = 0; i < 5; i++){
                     do{
                         flag = true;
-                        cout << "\tInsira a producão de lã (em KG) da ovelha no ano de " << 2019+i << " (caso a ovelha não fosse nascida nesse ano, ou ainda não fosse capaz de ser tosada, insira 0) : ";
+                        cout << "\tInsira a producão de lã (em KG) da ovelha no ano de " << 2019+i << " (caso a ovelha não produziu lã esse ano, insira 0) : ";
                         cin >> ovelhas[ult].producaoA[i];
                         if(ovelhas[ult].producaoA[i] < 0)
                         cout << "\tProdução anual invalida, tente novamete\n";
