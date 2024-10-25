@@ -165,7 +165,7 @@ int main(){
                                 cout << "Sim";   
                             else 
                                 cout << "Não";
-                            i = 101;
+                            
                         } else { 
                             if(i == 99) {
                                 cout << "\tOvelha não encontrada.";
@@ -197,7 +197,7 @@ int main(){
                                 cout << "Sim";   
                             else 
                                 cout << "Não";
-                            i = 101;
+                            
                         } else { 
                             if(i == 99) {
                                 cout << "\tOvelha não encontrada.";
@@ -240,7 +240,7 @@ int main(){
                                 cout << "Sim";   
                             else 
                                 cout << "Não";
-                            i = 101;
+                            
                         } else { 
                             if(i == 99) {
                                 cout << "\tOvelha não encontrada.";
@@ -272,7 +272,7 @@ int main(){
                                 cout << "Sim";   
                             else 
                                 cout << "Não";
-                            i = 101;
+                            
                         } else { 
                             if(i == 99) {
                                 cout << "\tOvelha não encontrada.";
@@ -311,7 +311,7 @@ int main(){
                                 cout << "Sim";   
                             else 
                                 cout << "Não";
-                            i = 101;
+                            
                         } else { 
                             if(i == 99) {
                                 cout << "\tOvelha não encontrada.";
@@ -343,7 +343,7 @@ int main(){
                                 cout << "Sim";   
                             else 
                                 cout << "Não";
-                            i = 101;
+                            
                         } else { 
                             if(i == 99) {
                                 cout << "\tOvelha não encontrada.";
@@ -507,31 +507,36 @@ int main(){
                 }
             break;
             case 5:
-                cout << "\t-------------------------------------------\n\tNI\tRaça\tProdução de 2019-2023\t\t\t\tPeso\tSexo\tIdade\tGestação\n"; /*Will deixe de ser corno, se por ID bote ID não NI cabeça de cebola, faz só para complicar*/ /*é pra ter coerencia mano*/
-                for(i = 0; i < ult; i++){
-                    cout << "\t" << ovelhas[i].ID << "\t" << ovelhas[i].raca << "\t" ;
-                    for(int j = 0; j < 5; j++){
-                        if(ovelhas[i].producaoA[j] != 0){
-                       cout << ovelhas[i].producaoA[j] << "\t"; 
+                if(ult < 1){
+                    cout << "\tSem ovelhas registradas";
+                }
+                else{
+                    cout << "\t-------------------------------------------\n\tNI\tRaça\tProdução de 2019-2023\t\t\t\tPeso\tSexo\tIdade\tGestação\n"; /*Will deixe de ser corno, se por ID bote ID não NI cabeça de cebola, faz só para complicar*/ /*é pra ter coerencia mano*/
+                    for(i = 0; i < ult; i++){
+                        cout << "\t" << ovelhas[i].ID << "\t" << ovelhas[i].raca << "\t" ;
+                        for(int j = 0; j < 5; j++){
+                            if(ovelhas[i].producaoA[j] != 0){
+                        cout << ovelhas[i].producaoA[j] << "\t"; 
+                            }
+                            else{
+                                cout << "N/A\t";
+                            }
                         }
-                        else{
-                            cout << "N/A\t";
+                        cout << "\t" << ovelhas[i].peso;
+                        if(ovelhas[i].sexo == 'f' || ovelhas[i].sexo == 'F'){
+                            cout << "\tFemea\t";
+                        }else{
+                            cout << "\tMacho\t";
+                        }
+                        cout << ovelhas[i].idade << " Anos\t";
+                        if(ovelhas[i].gestacao == 0){
+                            cout << "Não\n";
+                        }else{
+                            cout << "Sim\n";
                         }
                     }
-                      cout << "\t" << ovelhas[i].peso;
-                      if(ovelhas[i].sexo == 'f' || ovelhas[i].sexo == 'F'){
-                          cout << "\tFemea\t";
-                      }else{
-                          cout << "\tMacho\t";
-                      }
-                      cout << ovelhas[i].idade << " Anos\t";
-                      if(ovelhas[i].gestacao == 0){
-                        cout << "Não\n";
-                      }else{
-                        cout << "Sim\n";
-                      }
+                    cout << "-------------------------------------------\n";
                 }
-                cout << "-------------------------------------------\n";
             break;
             case 6:
                 sair = false;
